@@ -121,7 +121,7 @@ public class GNLPlayerListener extends PlayerListener {
 					out.newLine();
 				}
 				// log the success
-				plugin.log.info("[NightLight] world " + world.getName()	+ " saved.");
+				plugin.log.info("[GlowNightLight] world " + world.getName()	+ " saved.");
 				out.close();
 			} catch (IOException ex) {
 				ex.printStackTrace();

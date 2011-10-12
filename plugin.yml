@@ -4,26 +4,10 @@ version: 1.0
 commands:
     gnl:
         description: Toggles NightLight ability on and off
-    gnlreload:
-        description: Reloads the config
-    day:
-        description: Changes time on the current world to day
-    night:
-        description: Changes time on the current world to night
-    dawn:
-        description: Changes time on the current world to dawn
-    dusk:
-        description: Changes time on the current world to dusk
 permissions:
     glownightlight.nl:
         description: Toggles NightLight ability on and off
     glownightlight.reload:
         description: Reloads the config
-    glownightlight.day:
-        description: Changes time on current world to day
-    glownightlight.night:
-        description: Changes time on current world to night
-    glownightlight.dawn:
-        description: Changes time on the current world to dawn
-    glownightlight.dusk:
-        description: Changes time on the current world to dusk
+    glownightlight.time:
+        description: sets time

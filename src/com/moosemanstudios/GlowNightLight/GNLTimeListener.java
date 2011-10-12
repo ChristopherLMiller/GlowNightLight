@@ -35,21 +35,38 @@ public class GNLTimeListener {
 						// get the time in the world
 						long time = world.getTime();
 						
-						// if the time is between the intervals, then check the blocks and update them
-						if ((time > NIGHT_START) && (time < NIGHT_END)) {
-							ArrayList<Block> blockArray = plugin.playerlistener.blockHash.get(world);
+						// see if there is any weather
+						if (world.hasStorm()) {
+							int durationLeft = world.getWeatherDuration();
 							
-							for (Block block: blockArray) {
-								if (block.getType() != Material.GLOWSTONE) {
-									block.setType(Material.GLOWSTONE);
+								for (Block block : plugin.playerlistener.blockHash.get(world)) {
+									if (durationLeft >= 0) {
+										if (block.getType() != Material.GLOWSTONE) {
+											block.setType(Material.GLOWSTONE);
+										}
+									} else {
+										if (block.getType() != Material.GLASS) {
+											block.setType(Material.GLASS);
+										}
+									}
 								}
-							}
 						} else {
-							ArrayList<Block> blockArray = plugin.playerlistener.blockHash.get(world);
-							
-							for(Block block : blockArray) {
-								if (block.getType() != Material.GLASS) {
-									block.setType(Material.GLASS);
+							// if the time is between the intervals, then check the blocks and update them
+							if ((time > NIGHT_START) && (time < NIGHT_END)) {
+								ArrayList<Block> blockArray = plugin.playerlistener.blockHash.get(world);
+								
+								for (Block block: blockArray) {
+									if (block.getType() != Material.GLOWSTONE) {
+										block.setType(Material.GLOWSTONE);
+									}
+								}
+							} else {
+								ArrayList<Block> blockArray = plugin.playerlistener.blockHash.get(world);
+								
+								for(Block block : blockArray) {
+									if (block.getType() != Material.GLASS) {
+										block.setType(Material.GLASS);
+									}
 								}
 							}
 						}
