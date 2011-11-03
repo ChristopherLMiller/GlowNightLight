@@ -1,13 +1,21 @@
 name: GlowNightLight
 main: com.moosemanstudios.GlowNightLight.GlowNightLight
-version: 1.0
+version: 1.2.1
 commands:
     gnl:
         description: Toggles NightLight ability on and off
+    dawn:
+        description: sets time to dawn on current world
+    day:
+        description: sets time to day on current world
+    dusk:
+        description: sets time to dusk on current world
+    night:
+        description: sets time to night on current world
 permissions:
     glownightlight.nl:
         description: Toggles NightLight ability on and off
-    glownightlight.reload:
-        description: Reloads the config
+    glownightlight.admin:
+        description: Allows for admin features
     glownightlight.time:
         description: sets time
