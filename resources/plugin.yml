@@ -5,19 +5,14 @@ author: moose517
 main: com.moosemanstudios.GlowNightLight.Bukkit.GlowNightLight
 commands:
     gnl:
-        description: Toggles NightLight ability on and off
-    dawn:
-        description: sets time to dawn on current world
-    day:
-        description: sets time to day on current world
-    dusk:
-        description: sets time to dusk on current world
-    night:
-        description: sets time to night on current world
+        description: Geneal GlowNightLight command
 permissions:
     glownightlight.nl:
         description: Toggles NightLight ability on and off
     glownightlight.admin:
         description: Allows for admin features
-    glownightlight.time:
-        description: sets time
+    glownightlight.*:
+        description: All permission nodes
+        children:
+            glownightlight.nl: true
+            glownightlight.admin: true

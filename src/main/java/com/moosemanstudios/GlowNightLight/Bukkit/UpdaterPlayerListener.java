@@ -23,7 +23,7 @@ public class UpdaterPlayerListener implements Listener {
 		if (player.hasPermission("glownightlight.admin")) {
 			Updater updater = new Updater(plugin, "glownightlight", plugin.getFileFolder(), Updater.UpdateType.NO_DOWNLOAD, false);
 			
-			if (updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE && plugin.updaterNotify) {
+			if (updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE && plugin.updaterNotify && plugin.updaterEnabled) {
 				player.sendMessage(ChatColor.AQUA + "An update is avaiable for GlowNightLight: " + updater.getLatestVersionString() + "(" + updater.getFileSize() + " bytes");
 				player.sendMessage(ChatColor.AQUA + "Type " + ChatColor.WHITE + "/gnl update" + ChatColor.AQUA + " to update");
 			}

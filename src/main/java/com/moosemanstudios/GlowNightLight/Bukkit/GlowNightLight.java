@@ -17,6 +17,7 @@ public class GlowNightLight extends JavaPlugin {
 	public Boolean debug;
 	public int nightStart, nightEnd;
 	public Boolean updaterEnabled, updaterAuto, updaterNotify;
+	public Boolean activeDuringWeather;
 	
 	@Override
 	public void onEnable() {
@@ -34,7 +35,7 @@ public class GlowNightLight extends JavaPlugin {
 		// check updater settings
 		if (updaterEnabled) {
 			if (updaterAuto) {
-				Updater updater = new Updater(this, "glownightlight", this.getFile(), Updater.UpdateType.DEFAULT, true);
+				Updater updater = new Updater(this, "GlowNightLight", this.getFile(), Updater.UpdateType.DEFAULT, true);
 				if (updater.getResult() == Updater.UpdateResult.SUCCESS)
 				getLog().info(getPrefix() + "update downloaded successfully, restart server to apply update");
 			}
@@ -43,11 +44,20 @@ public class GlowNightLight extends JavaPlugin {
 				this.getServer().getPluginManager().registerEvents(new UpdaterPlayerListener(this), this);
 			}
 		}
+		
+		// register the listeners
+		this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+		this.getServer().getPluginManager().registerEvents(new BlockListener(this), this);
+		
+		// register the command executor
+		getCommand("gnl").setExecutor(new GNLCommandExecutor(this));
+		
+		getLog().info(getPrefix() + "is now enabled");
 	}
 	
 	@Override
 	public void onDisable() {
-		
+		getLog().info(getPrefix() + " is now disabled");
 	}
 	
 	public String getPrefix() {
@@ -67,10 +77,11 @@ public class GlowNightLight extends JavaPlugin {
 		if (!getConfig().contains("debug")) getConfig().set("debug", false);
 		if (!getConfig().contains("night-start")) getConfig().set("night-start", 13000);
 		if (!getConfig().contains("night-end")) getConfig().set("night-end", 23000);
+		if (!getConfig().contains("active-during-weather")) getConfig().set("active-during-weather", true);
 		
 		// updater settings
-		if (!getConfig().contains("updater.enabled")) getConfig().set("updater.enabled", true);
-		if (!getConfig().contains("udpater.auto")) getConfig().set("updater.auto", true);
+		if (!getConfig().contains("updater.enabled")) getConfig().set("updater.enabled", false);
+		if (!getConfig().contains("updater.auto")) getConfig().set("updater.auto", false);
 		if (!getConfig().contains("updater.notify")) getConfig().set("updater.notify", false);
 		
 		saveConfig();
@@ -86,6 +97,12 @@ public class GlowNightLight extends JavaPlugin {
 			getLog().info(getPrefix() + "Night end: " + nightEnd);
 		}
 		
+		activeDuringWeather = getConfig().getBoolean("active-during-weather");
+		if (debug)
+			if (activeDuringWeather)
+					getLog().info(getPrefix() + "Active during weather: true");
+		
+		// updater
 		updaterEnabled = getConfig().getBoolean("updater.enabled");
 		updaterAuto = getConfig().getBoolean("updater.auto");
 		updaterNotify = getConfig().getBoolean("updater.notify");
@@ -97,6 +114,8 @@ public class GlowNightLight extends JavaPlugin {
 			if (updaterNotify)
 				getLog().info(getPrefix() + "notifying on update");
 		}
+		
+		getLog().info(getPrefix() + "Config loaded.");
 	}
 	
 	public File getFileFolder() {
