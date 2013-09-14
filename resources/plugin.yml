@@ -1,6 +1,8 @@
-name: GlowNightLight
-main: com.moosemanstudios.GlowNightLight.GlowNightLight
-version: 1.2.1
+name: ${name}
+version: ${project.version}
+description: ${description}
+author: moose517
+main: com.moosemanstudios.GlowNightLight.Bukkit.GlowNightLight
 commands:
     gnl:
         description: Toggles NightLight ability on and off
