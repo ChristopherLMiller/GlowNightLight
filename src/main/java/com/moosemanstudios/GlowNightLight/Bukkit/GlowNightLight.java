@@ -10,6 +10,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
+import com.moosemanstudios.GlowNightLight.Core.BlockManager;
+
 public class GlowNightLight extends JavaPlugin {
 	private String prefix = "[GlowNightLight] ";
 	private Logger log = Logger.getLogger("minecraft");
@@ -51,6 +53,9 @@ public class GlowNightLight extends JavaPlugin {
 		
 		// register the command executor
 		getCommand("gnl").setExecutor(new GNLCommandExecutor(this));
+		
+		// initialize the block manager
+		BlockManager.getInstance().init(nightStart, nightEnd, activeDuringWeather);
 		
 		getLog().info(getPrefix() + "is now enabled");
 	}
@@ -116,6 +121,11 @@ public class GlowNightLight extends JavaPlugin {
 		}
 		
 		getLog().info(getPrefix() + "Config loaded.");
+	}
+	
+	public void setConfig(String key, Object value) {
+		getConfig().set(key, value);
+		saveConfig();
 	}
 	
 	public File getFileFolder() {

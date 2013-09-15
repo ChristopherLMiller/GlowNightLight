@@ -31,6 +31,8 @@ public class GNLCommandExecutor implements CommandExecutor {
 					showHelp();
 				} else if (args[0].equalsIgnoreCase("version")) {
 					showVersion();
+				} else if (args[0].equalsIgnoreCase("stats")) {
+					stats();
 				} else if (args[0].equalsIgnoreCase("enable")) {
 					enable(true);
 				} else if (args[0].equalsIgnoreCase("disable")) {
@@ -83,16 +85,44 @@ public class GNLCommandExecutor implements CommandExecutor {
 		}
 	}
 	
+	public void stats() {
+		sender.sendMessage(ChatColor.YELLOW + "GlowNightLight - Stats");
+		sender.sendMessage(ChatColor.YELLOW + "------------------------------");
+		sender.sendMessage(ChatColor.GOLD + "Night start: " + ChatColor.WHITE + Integer.toString(BlockManager.getInstance().getNightStart()));
+		sender.sendMessage(ChatColor.GOLD + "Night end: " + ChatColor.WHITE + Integer.toString(BlockManager.getInstance().getNightEnd()));
+		sender.sendMessage(ChatColor.GOLD + "Active during weather: " + ChatColor.WHITE + String.valueOf(BlockManager.getInstance().getActiveDuringWeather()));
+		sender.sendMessage(ChatColor.GOLD + "No. Players enabled: " + ChatColor.WHITE + BlockManager.getInstance().getNumPlayersEnabled());
+		sender.sendMessage(ChatColor.GOLD + "No. Blocks: " + ChatColor.WHITE + BlockManager.getInstance().getNumBlocks());
+	}
+	
 	public void reload() {
-		
+		// TODO: need to finish up block manager to know how to handle here
 	}
 	
 	public void startTime(String[] args) {
-		
+		if (sender.hasPermission("glownightlight.admin")) {
+			if (args.length >= 2) {
+				BlockManager.getInstance().setNightStart(args[1]);
+				plugin.setConfig("night-start", BlockManager.getInstance().getNightStart());
+			} else {
+				sender.sendMessage(ChatColor.RED +"Must provide only a start time");
+			}
+		} else {
+			sender.sendMessage(ChatColor.RED + "Missing required permission: " + ChatColor.WHITE + "glownightlight.admin");
+		}
 	}
 	
 	public void stopTime(String[] args) {
-		
+		if (sender.hasPermission("glownightlight.admin")) {
+			if (args.length >= 2) {
+				BlockManager.getInstance().setNightStart(args[1]);
+				plugin.setConfig("night-end", BlockManager.getInstance().getNightEnd());
+			} else {
+				sender.sendMessage(ChatColor.RED +"Must provide only a end time");
+			}
+		} else {
+			sender.sendMessage(ChatColor.RED + "Missing required permission: " + ChatColor.WHITE + "glownightlight.admin");
+		}
 	}
 	
 	public void setWeather(String[] args) {
@@ -145,6 +175,7 @@ public class GNLCommandExecutor implements CommandExecutor {
 	public void showHelp() {
 		sender.sendMessage("/gnl help" + ChatColor.RED + ": Display this help screen");
 		sender.sendMessage("/gnl version " + ChatColor.RED + ": Show plugin verion");
+		sender.sendMessage("/gnl stats" + ChatColor.RED + ": Stats about plugin");
 		
 		if (sender.hasPermission("glownightlight.nl")) {
 			sender.sendMessage("/gnl <enable/disable>" + ChatColor.RED + ": Enable/disable ability to toggle blocks");
