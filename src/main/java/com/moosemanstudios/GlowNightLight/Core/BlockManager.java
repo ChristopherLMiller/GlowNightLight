@@ -6,7 +6,7 @@ public class BlockManager {
 	private static BlockManager instance = null;
 	
 	private HashSet<String> players = new HashSet<String>();	// hashmap containing players with gnl enabled
-	private HashSet<Block> blocks = new HashSet<Block>();	// hashset of blocks to change
+	private HashSet<simpleBlock> blocks = new HashSet<simpleBlock>();
 	private int nightStart, nightEnd;
 	private Boolean activeDuringWeather;
 	
@@ -20,11 +20,18 @@ public class BlockManager {
 	}
 	
 	public Boolean addPlayer(String player) {
-		return players.add(player);
+		if (!players.contains(player)) {
+			return players.add(player);
+		} else {
+			return true;
+		}
 	}
 	
 	public Boolean removePlayer(String player) {
-		return players.remove(player);
+		if (players.contains(player))
+			return players.remove(player);
+		else
+			return true;
 	}
 	
 	public int getNumPlayersEnabled() {
@@ -61,5 +68,21 @@ public class BlockManager {
 		this.nightStart = nightStart;
 		this.nightEnd = nightEnd;
 		this.activeDuringWeather = activeDuringWeather;
+	}
+
+	public boolean playerEnabled(String name) {
+		return players.contains(name);
+	}
+
+	public boolean blockEnabled(simpleBlock block) {
+		return blocks.contains(block);
+	}
+
+	public boolean removeBlock(simpleBlock block) {
+		return blocks.remove(block);
+	}
+
+	public boolean addBlock(simpleBlock block) {
+		return blocks.add(block);
 	}
 }

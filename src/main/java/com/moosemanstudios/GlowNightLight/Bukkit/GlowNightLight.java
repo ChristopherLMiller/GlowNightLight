@@ -2,10 +2,13 @@ package com.moosemanstudios.GlowNightLight.Bukkit;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import net.h31ix.updater.Updater;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
@@ -89,6 +92,13 @@ public class GlowNightLight extends JavaPlugin {
 		if (!getConfig().contains("updater.auto")) getConfig().set("updater.auto", false);
 		if (!getConfig().contains("updater.notify")) getConfig().set("updater.notify", false);
 		
+		// worlds
+		if (!getConfig().contains("worlds")) {
+			List<World> worlds = Bukkit.getWorlds();
+			for(World world : worlds) {
+				getConfig().set("worlds." + world.getName(), true);
+			}
+		}
 		saveConfig();
 		
 		debug = getConfig().getBoolean("debug");

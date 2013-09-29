@@ -29,5 +29,4 @@ public class UpdaterPlayerListener implements Listener {
 			}
 		}
 	}
-
 }

@@ -172,6 +172,7 @@ public class GNLCommandExecutor implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "Missing required permission: " + ChatColor.WHITE + "glownightlight.admin");
 		}
 	}
+	
 	public void showHelp() {
 		sender.sendMessage("/gnl help" + ChatColor.RED + ": Display this help screen");
 		sender.sendMessage("/gnl version " + ChatColor.RED + ": Show plugin verion");
